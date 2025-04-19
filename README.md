@@ -1,4 +1,6 @@
-# Uploading temperature sensor data in Thing Speak cloud
+#### NAME: MALENI M
+#### Reg.No: 212223040110
+# EXP-03 Uploading temperature sensor data in Thing Speak cloud
 
 # AIM:
 To monitor the temperature sensor data in the Thing speak using an ESP32 controller.
@@ -71,10 +73,80 @@ Automatically act on your data and communicate using third-party services like T
 
 
 # PROGRAM:
+```
+#include"ThingSpeak.h"
+#include <WiFi.h>
+#include"DHT.h"
+
+
+char ssid[]="realme narzo 50i Prime";
+char pass[]="maleni32";
+
+
+const int out=23;
+long T;
+float temperature=0;
+
+WiFiClient client;
+DHT dht(23,DHT11);
+
+unsigned long myChannelField=2913855;
+const int TemperatureField=1;
+const int HumidityField=2;
+const char* myWriteAPIKey="EDFCWYNSHWYD1JV9";
+
+void setup()
+{
+Serial.begin(115200);
+pinMode(out,INPUT);
+ThingSpeak.begin(client);
+dht.begin();
+delay(1000);
+
+}
+void loop() {
+  if(WiFi.status()!=WL_CONNECTED)
+  {
+    Serial.print("Attempting to connect to SSID:");
+    Serial.println(ssid);
+    while(WiFi.status()!=WL_CONNECTED)
+    {
+      WiFi.begin(ssid,pass);
+      Serial.print(".");
+      delay(5000);
+    }
+    Serial.println("\nConnected.");
+
+  }
+  float temperature=dht.readTemperature();
+  float humidity=dht.readHumidity();
+
+  Serial.print("Temperature:");
+  Serial.print(temperature);
+  Serial.print("c");
+
+  Serial.print("Humidity:");
+  Serial.print(humidity);
+  Serial.print("g.m-3");
+
+ThingSpeak.writeField(myChannelField, TemperatureField,temperature,myWriteAPIKey);
+ThingSpeak.writeField(myChannelField,HumidityField,humidity,myWriteAPIKey);
+delay(100);
+}
+
+             
+```
 
 # CIRCUIT DIAGRAM:
+<img src="https://github.com/user-attachments/assets/6eabe22a-e00b-4f36-8779-21e26f36b966" alt="alt text" width="500" height="300" class="center">
 
 # OUTPUT:
+## Serial Monitor
+![Screenshot 2025-04-12 115322](https://github.com/user-attachments/assets/295a4f8d-4094-4aaa-a5f4-d9341a838b8a)
+
+
+## Thing Speak
+![Uploading Screenshot 2025-04-12 115426.png…]()
 
 # RESULT:
 
