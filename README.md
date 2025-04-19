@@ -146,7 +146,8 @@ delay(100);
 
 
 ## Thing Speak
-![Uploading Screenshot 2025-04-12 115426.png…]()
+![Screenshot 2025-04-12 115426](https://github.com/user-attachments/assets/b03af2a5-8125-47af-8a09-28720fd4d809)
+
 
 # RESULT:
 
